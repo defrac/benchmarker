@@ -443,7 +443,7 @@ class Main {
 
       @Override
       String stdoutOf(String benchmark) throws IOException, InterruptedException {
-        return run(PATH_TO_D8, "-f", DEFRAC_BENCHMARKS + "/target/web/platformBenchmark/platform_benchmark.js");
+        return run(PATH_TO_D8, "-f", DEFRAC_BENCHMARKS + "/target/web/defrac.benchmark/app.js");
       }
     }
 
@@ -454,7 +454,7 @@ class Main {
 
       @Override
       String stdoutOf(String benchmark) throws IOException, InterruptedException {
-        return run(PATH_TO_JS, "-f", DEFRAC_BENCHMARKS + "/target/web/platformBenchmark/platform_benchmark.js");
+        return run(PATH_TO_JS, "-f", DEFRAC_BENCHMARKS + "/target/web/defrac.benchmark/app.js");
       }
     }
 
