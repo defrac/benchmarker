@@ -43,9 +43,9 @@ class Main {
   static Map<String, List<? extends Runner>> DEFRAC_RUNNERS = new HashMap<>();
 
   static {
-    DEFRAC_RUNNERS.put("jvm", Arrays.asList(new DefracRunners.JVM()));
+    DEFRAC_RUNNERS.put("jvm", Collections.singletonList(new DefracRunners.JVM()));
     DEFRAC_RUNNERS.put("web", Arrays.asList(new DefracRunners.D8(), new DefracRunners.SpiderMonkey()));
-    DEFRAC_RUNNERS.put("linux", Arrays.asList(new DefracRunners.Linux()));
+    DEFRAC_RUNNERS.put("linux", Collections.singletonList(new DefracRunners.Linux()));
   }
 
   static Map<String, List<Result>> RESULTS = new HashMap<>();
@@ -120,9 +120,7 @@ class Main {
     allRunners.add(DART_RUNNER);
     allRunners.addAll(DART2JS_RUNNERS);
     allRunners.addAll(JS_RUNNERS);
-    for(List<? extends Runner> r : DEFRAC_RUNNERS.values()) {
-      allRunners.addAll(r);
-    }
+    DEFRAC_RUNNERS.values().forEach(allRunners::addAll);
 
     for(Runner runner : allRunners) {
       maxRunnerNameLength =
@@ -188,12 +186,7 @@ class Main {
     try {
       final List<Result> results = new LinkedList<>(RESULTS.get(benchmark));
 
-      Collections.sort(results, new Comparator<Result>() {
-        @Override
-        public int compare(Result a, Result b) {
-          return a.run.compareTo(b.run);
-        }
-      });
+      Collections.sort(results, (a, b) -> a.run.compareTo(b.run));
 
       final Path datFile = Files.createTempFile(benchmark, ".dat");
       final Path svgFile = Paths.get(benchmark+".svg");
